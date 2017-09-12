@@ -20,33 +20,63 @@ $openSans: 'Open Sans', sans-serif;
 	margin: 0 auto;
 }
 
+
+.logInContainer header {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height:400px;
+	width: 570px;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+}
+
+main.logInMain {
+	min-height: 100vh;
+	background-image: url('../../public/assets/patternLogin.png');
+	background-position: center;
+	background-repeat: repeat-x;	
+	background-color: $hyRed;
+}
 header {
 	background-color: $darkerGrey; 
 	// margin-bottom: 50px;
 }
 
+.builtBy {
+	p {
+		font-family: $montserrat;
+		letter-spacing: 3px;
+		color: white;
+		font-size: 12px;
+		text-transform: uppercase;
+		margin-top: 15px;
+		text-shadow: 0 0 10px black;
+	}
+	a {
+		text-decoration: none;
+		color: $hyRed;
+		text-shadow: 0 0 10px black;
+	}
+}
+
 main {
 	min-height: 100vh;
-	position: relative;
-	background-image: url('../../public/assets/patternSmallRed.png');	
+	background-color: $lighterGrey;// background-color: $lighterGrey;
+	background-image: url('../../public/assets/patternDarkTesterTwo.png');
+	// background-repeat: repeat-x;
+	// background-position: center;
+	
 }
 
-main.logInMain {
-	min-height: 82vh;
-	background-image: url('../../public/assets/patternTransparent.png');	
-	background-color: $hyRed;
-}
 
-footer.logInFooter {
-	min-height: 50px;
-	background-color: $darkerGrey; 
-}
 
-.headerContainer {
+.headerContainer, .headerLogin {
 	background-color: $darkerGrey;
 	min-height: 50px;
 	display: flex;
-	// flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
 	h1 {
@@ -63,6 +93,11 @@ footer.logInFooter {
 		}
 	}
 }
+
+.headerLogin {
+	flex-direction: column;
+}
+
 
 .headerLeft {
 	display: flex;
@@ -85,6 +120,7 @@ footer.logInFooter {
 .logInButton {
 	color: white;
 	background-color: $hyRed;
+	padding: 10px;
 	border: none;
 	width: 100%;
 	font-family: $montserrat;
@@ -112,35 +148,54 @@ footer.logInFooter {
 
 .addUser {
 	font-family: $montserrat;
-	border-radius: 25px;
-	width: 500px;
+	background-color: white;
+	width: 350px;
+	margin-left: 75px;
+	// margin-top: 50px;
+	min-height: 625px;
+	border: 5px solid $darkerGrey;
 	text-align: center;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	padding-top: 50px;
+	justify-content: flex-start;
+	// padding-top: 50px;
+	
+	h2 {
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+
 	.username {
 		margin-top: 60px;
 		margin: 0 auto;
-		width: 400px;
+		width: 80%;
 		border: 2px solid $darkerGrey;
+		color: $darkerGrey;
 		padding: 10px;
+		margin-bottom: 10px;
 
 	}
 	p {
-		
+		text-align: center;
+		padding-bottom: 10px;
+		padding-top: 10px;
 	}
 
 	label {
-		padding-right: 10px;
+		padding-right: 5px;
+		font-size: 10px;
+		font-weight: bold;
 		
 	}
 	input[type="radio"] {
-			margin-right: 10px;
+			margin-right: 5px;
+			// margin-bottom: 10px;
 		}
 	.usermessage {
-	width: 400px;
-	display: block;
+	width: 80%;
+	height: 117px;
+	// display: block;
 	resize: none;
 	margin: 0 auto;
 	margin-top: 31px;
@@ -148,17 +203,18 @@ footer.logInFooter {
 	padding: 10px;
 	}
 	.giphyQuery {
-		width: 300px;
+		width: 60%;
 		margin-top: 30px;
 		margin-bottom: 30px;
-		margin-right: 5px;
+		margin-right: 16px;
 		border: 2px solid $darkerGrey;
+		padding: 10px;
 	}
 	.gifSearchButton {
-		width: 120px;
+		width: 30%;
 		background-color: $darkerGrey;
 		text-transform: uppercase;
-		padding: 5px;
+		padding: 10px;
 		color: white;
 		border: none;
 	}
@@ -167,24 +223,54 @@ footer.logInFooter {
 		background-color: $darkerGrey;
 		color: white;
 		border: none;
-		padding: 5px;
+		padding: 10px;
+		width: 80%;
+	}
+}
+
+.giphyGalleryContainer {
+	text-align: center;
+	background-color: $darkerGrey;
+	margin-top: 10px;
+
+	button {
+		color: white;
+		background-color: $hyRed;
+		padding: 10px;
+		border: none;
+		width: 150px;
+		font-family: $montserrat;
+		text-shadow: 0 0 3px black;
+		margin-top: 10px;
+		font-weight: 700;
+		box-shadow: 3px 3px 3px black;
+		margin-bottom: 10px;
 	}
 }
 
 .giphyGallery {
-	padding-top: 10px;
+	background-color: $darkerGrey;
 	padding-right: 5px;
 	padding-left: 5px;
+	padding-bottom: 10px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
 	align-items: center;
+	transition: 0.3s;
 }
 
 .gifImage {
 	height: 100%;
 	width: calc((100% / 3) - 5px);
-	padding-top: 10px;
+	transition: 0.3s;
+	&:hover {
+		transform: scale(0.8);
+	}
+}
+
+.highlighted {
+	border: 5px solid $hyRed;
 }
 
 .cueResults {
@@ -197,8 +283,6 @@ footer.logInFooter {
 	li {
 		list-style-type: none;
 		background-color: rgba(33, 92, 161, 1);
-			border: 5px solid $darkerGrey;
-			border-radius: 25px;
 			h3 {
 				margin-top: 10px;
 				margin-bottom: 10px;
@@ -212,8 +296,7 @@ footer.logInFooter {
 	&:first-child {
 			background-color: white;
 			margin-bottom: 10px;
-			border: 5px solid $darkerGrey;
-			border-radius: 25px;
+
 			h3 {
 				margin-top: 10px;
 				margin-bottom: 10px;
@@ -234,22 +317,19 @@ footer.logInFooter {
 	min-height: 200px;
 	border-radius: 5px;
 	justify-content: space-between;
-	align-items: center;	
+	align-items: flex-start;	
+}
+
+.cueItemProfileImage {
+	max-width: 100%;
+	height: 60px;
+	border-radius: 50%;
 }
 
 .cueText {
 	width: calc((50%) - 5px);
 	margin-right: 5px;
 	padding-left: 20px;
-	h3 {
-		margin-bottom: 10px;
-		color: $lighterGrey;
-		font-size: 30px;
-		font-weight: 400;
-	}
-	p {
-		color: $lighterGrey;
-	}
 }
 
 .cueGif {
