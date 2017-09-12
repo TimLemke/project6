@@ -85,7 +85,7 @@ class App extends React.Component {
 		event.preventDefault();
 		let cuedGifs = [];
 		ajax({
-			url: `http://api.giphy.com/v1/gifs/search?`,
+			url: `https://api.giphy.com/v1/gifs/search?`,
 				data: {
 				api_key: `5ec81cbaf1b242b4a9297cbfa8db8cf1`,
 				q: `${this.state.giphyQuery}`,
@@ -155,7 +155,6 @@ class App extends React.Component {
 		})
 		// console.log(sortedCuedPerson);
 
-
 		return (
 			<div className='app'>
 				<header>
@@ -174,7 +173,6 @@ class App extends React.Component {
 							{this.state.user ? 
 								<img className="profileImage" src={this.state.user.photoURL} alt="User Photo"/>                
 							:
-								
 								<img className="profileImage" src="../../public/assets/logo-hackeryou.svg" alt=""/>
 							}
 						</div>
@@ -248,9 +246,11 @@ class App extends React.Component {
 					</div>
 				</main>
 				:
-	      	    <div className='wrapper'>
-	      	      <p>Please log in to see the Cue!</p>
-	      	    </div>
+				<div className="logInContainer">
+					<main className="logInMain"></main>
+					<footer className="logInFooter"></footer>
+				</div>
+	      	    
 	      	  }
 			</div>
 		)
