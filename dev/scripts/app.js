@@ -18,7 +18,6 @@ class App extends React.Component {
 			cuedPerson: [],
 			cuedGifs: [],
 			chosenGif: '',
-			// cuePositon: '',
 			user: null,
 			showGiphy: false,
 			gifKey: ''
@@ -75,12 +74,6 @@ class App extends React.Component {
 		};
 
 		newPerson.cuePosition = newPerson.temperature + newPerson.hangerLevel;
-
-		// if(newPerson.temperature === "RoomTemp"){
-		// 	newPerson.cuePosition = 1;
-		// } 
-
-		console.log('newPerson', newPerson)
 		dbRef.push(newPerson);
 	}
 
@@ -92,6 +85,7 @@ class App extends React.Component {
 				data: {
 				api_key: `5ec81cbaf1b242b4a9297cbfa8db8cf1`,
 				q: `${this.state.giphyQuery}`,
+				rating: 'g',
 				limit: 15
 			}
 		}).then((data) => {
@@ -107,21 +101,10 @@ class App extends React.Component {
 	}
 
 	chosenGif(event, key) {
-		// console.log(event.target.key);
-		console.log(event, key);
-		// document.getElementById('gifImage highlighted').classList.remove('highlighted');
-
 		this.setState({
 			chosenGif: event.target.src,
 			gifKey: key
-			// <toggleAc></toggleAc>t: 'gifImage highlighted'
 		});
-
-		// if(event.target.src === this.state.chosenGif) {
-			// event.target.className = 'gifImage highlighted';
-		// } else {
-			// event.target.className = 'gifImage';
-		// }
 	}
 
 	removeCue(index) {
@@ -134,9 +117,7 @@ class App extends React.Component {
 			[event.target.name]: event.target.value,
 		});
 		this.setState({
-
-		})
-		
+		})	
 	}
 
 	closeGiphy() {
@@ -144,7 +125,6 @@ class App extends React.Component {
 			showGiphy: false
 		})
 	}
-
 
 	componentDidMount() {
 		dbRef.on('value', (snapshot) => {
@@ -174,7 +154,6 @@ class App extends React.Component {
 		sortedCuedPerson.sort(function(a, b) {
 			return (a.cuePosition - b.cuePosition);
 		})
-		// console.log(sortedCuedPerson);
 		let showGiphy = (
 			<div className="giphyGalleryContainer">
 				<button onClick={this.closeGiphy}>Close</button>
@@ -220,35 +199,16 @@ class App extends React.Component {
 									<p className="howCold">How Cold Is Your Food?</p>
 									<label htmlFor="RoomTemp">Room Temp.</label>
 									<input onClick={this.handleChange} type="radio" name="temperature" value={10} id="RoomTemp"/>
-									<label htmlFor="Cool">Cool</label>
-									<input onClick={this.handleChange} type="radio" name="temperature" value={20} id="Cool"/>
 									<label htmlFor="Cold">Cold</label>
-									<input onClick={this.handleChange} type="radio" name="temperature" value={30} id="Cold"/>
-									<label htmlFor="Thawed">Thawed</label>
-									<input onClick={this.handleChange} type="radio" name="temperature" value={40} id="Thawed"/>
+									<input onClick={this.handleChange} type="radio" name="temperature" value={20} id="Cold"/>
 									<label htmlFor="Frozen">Frozen</label>
-									<input onClick={this.handleChange} type="radio" name="temperature" value={50} id="Frozen"/>
-									<p className="howLong">How fast do you eat?</p>
-									<label htmlFor="Slow">Slow</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-2} id="Slow"/>
-									<label htmlFor="">Beginning</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-4} id="Beginning"/>
-									<label htmlFor="frozen">Moderate</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-6} id="Moderate"/>
-									<label htmlFor="Warning">Warning</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-8} id="Warning"/>
-									<label htmlFor="Extreme">Extreme</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-10} id="Extreme"/>
-									<p className="howHangry">How hangry are you?</p>
-									<label htmlFor="Low">Low</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-3} id="Low"/>
-									<label htmlFor="Beginning">Beginning</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-6} id="Beginning"/>
-									<label htmlFor="frozen">Moderate</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-9} id="Moderate"/>
-									<label htmlFor="Warning">Warning</label>
-									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-12} id="Warning"/>
-									<label htmlFor="Extreme">Extreme</label>
+									<input onClick={this.handleChange} type="radio" name="temperature" value={30} id="Frozen"/>
+									<p className="howHangry">How bad is your hanger?</p>
+									<label htmlFor="Normal">Normal</label>
+									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-5} id="Normal"/>
+									<label htmlFor="Warning">It is bad!</label>
+									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-10} id="Warning"/>
+									<label htmlFor="Extreme">It is extreme!</label>
 									<input onClick={this.handleChange} type="radio" name="hangerLevel" value={-15} id="Extreme"/>
 									<textarea className="usermessage" name="userMessage" cols="10" rows="10" placeholder="What's your message to the group?"  onChange={this.handleChange}></textarea>
 									<input className="giphyQuery" type="text" onChange={this.handleChange} placeholder="Search for a Gif!" name="giphyQuery"/>
@@ -264,15 +224,22 @@ class App extends React.Component {
 											<li key={item.id}>
 												<div className="cueItem">
 													<img className="cueItemProfileImage" src={this.state.user.photoURL} alt="User Photo"/>
-													<div className="cueText">
-														<h3>{item.user}</h3>
-														<p>Food Temperature: {item.temperature}</p>
-														<p>{item.userMessage}</p>
-														{item.user === this.state.user.displayName || item.user === this.state.user.email ?
-														  <button onClick={() => this.removeCue(item.id)}>Remove Item</button> : null}
-													</div>
-													<div className="cueGif">
-														<img src={`${item.chosenGif}`} alt="The users selected gif"/>
+													<div className="cueItemContainer">
+														<div className="cueText">
+															<h3>{item.user}</h3>
+															{item.user === this.state.user.displayName || item.user === this.state.user.email ?
+															<button className="removeButton" onClick={() => this.removeCue(item.id)}>Remove Me!</button> : null}
+															<p>{item.userMessage}</p>
+														</div>
+														<div className="cueGif">
+														{console.log(item.chosenGif)}
+														{item.chosenGif === "" ? 
+															<img className="placeholderMicrowave"src="../../public/assets/microwaveBlack.png" alt="The users selected Gif!"/>                
+														:
+															<img src={`${item.chosenGif}`} alt="The users selected Gif!"/>
+														}
+															
+														</div>
 													</div>
 												</div>
 											</li>
@@ -282,6 +249,18 @@ class App extends React.Component {
 							</section>
 						</div>
 					</main>
+					<footer>
+						<div className="wrapper footerContainer">
+							<div>
+								<p>Built by <a href={'www.timlemke.ca'}>Tim Lemke</a></p>
+							</div>
+							<div className="poweredBy">
+								<p>Powered By:</p>
+								<img className="giphyLogo" src="../../public/assets/giphyLogo.png" alt="Giphy Api Logo"/>
+								<img src="../../public/assets/firebaseLogo.png" alt="Google Firebase Logo"/>
+							</div>
+						</div>
+					</footer>
 				</div>
 				:
 				<div className="logInContainer">
@@ -311,7 +290,6 @@ class App extends React.Component {
 					</header>
 					<main className="logInMain"></main>
 				</div>
-	      	    
 	      	  }
 			</div>
 		)
